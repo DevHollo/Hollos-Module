@@ -2,9 +2,6 @@ from hollosmodule import Text
 
 text = Text()
 
-for i in range(1, 300+1):
-    print("\n\n\n")
-
 print(text.red('red text'))
 print(text.black("------"))
 print(text.orange('orange text'))
