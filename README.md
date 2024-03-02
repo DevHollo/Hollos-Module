@@ -1,5 +1,5 @@
 # Hollo's Module
-![logo](https://devhollo.github.io/!assets/dev_assets/hollosmodule/img/logo.png)
+![logo](https://devhollo.github.io/!assets/dev_assets/hollosmodule/img/logo.png)<br/>
 Hollo's Module is a module with a BUNCH of cool stuff
 
 # Examples
