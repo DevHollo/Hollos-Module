@@ -5,7 +5,7 @@ with open('README.md', 'r') as mdfile:
 
 setup(
     name='Hollos-Module',
-    version='0.0.4',
+    version='0.0.5',
     scripts=['hollosmodule.py'],
     author="Hollo",
     author_email="hollo1234567890e@gmail.com",
