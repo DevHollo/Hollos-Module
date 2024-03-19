@@ -540,3 +540,62 @@ def hexdecimals(return_as: Literal['list', 'tuple'] = 'list', _max: int = 255) -
         else:
             hdecimals += (f"{i} = 0x{i:02X}",)
     return hdecimals
+
+
+class QRcode:
+    def __init__(self, *args, **kwargs):
+        """
+        Generate QR Codes! Example:
+        ```py
+        from hollosmodule import QRcode
+
+        qr = QRcode()
+
+        qr.make_qr_code("Hello, World!")
+
+        qr.save_qr("qr_code.png")
+        ```
+        """
+        pass
+
+    def make_qr_code(self, data: str | None, *, fill_color: str = "#000000", background_color: str = "#ffffff", box_size: int = 10, border: int = 4, fit: bool = True, version: int = 1):
+        """
+        Make a QR code.
+        """
+        try:
+            import qrcode.main, qrcode.constants
+            if not version == 1:
+                version = 1
+            else:
+                pass
+            self.__qrraw = qrcode.main.QRCode(
+                version=version,
+                error_correction=qrcode.constants.ERROR_CORRECT_Q,
+                box_size=box_size,
+                border=border,
+            )
+            self.__qrraw.add_data(data)
+            self.__qrraw.make(fit=True)
+            self.__qrimg = self.__qrraw.make_image(fill_color=fill_color, back_color=background_color)
+        except Exception as e:
+            raise Exception(e)
+
+    def save_qr(self, p: str):
+        """
+        Save QR code.
+        """
+        try:
+            self.__qrimg.save(p)
+            self.fp = p
+        except Exception as e:
+            raise Exception(e)
+        
+    def delete_qr(self):
+        """
+        Delete the QR code.
+        """
+        import os
+        if self.fp:
+            os.remove(os.path.abspath(self.fp))
+        else:
+            raise FileNotFoundError("File not found")
