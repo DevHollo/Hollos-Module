@@ -452,6 +452,31 @@ class Decorators:
                 return func(*args, **kwargs)
             return wrapper
         return decorator
+    
+    @staticmethod
+    def log_execution(to_log: str | None = None, log_to: Literal['console', 'file'] = 'console', file: str = '_logs.log'):
+        """
+        Log after the function is run based on `log_to`.
+        """
+        import logging
+        def decorator(func):
+            def wrapper(*args, **kwargs):
+                result = func(*args, **kwargs)
+                log_message = None
+                if to_log is None:
+                    log_message = f" Function \'{func.__name__}()\' executed. ::END"
+                else:
+                    log_message = f' {to_log} ::END'
+                if log_to == 'console':
+                    print(log_message)
+                elif log_to == 'file':
+                    logging.basicConfig(filename=file, level=logging.INFO)
+                    logging.info(log_message)
+                else:
+                    raise ValueError('Param log_to must be \'console\', \'file\', or None.')
+                return result
+            return wrapper
+        return decorator
 
 class Files:
     def __init__(self, *args, **kwargs):
