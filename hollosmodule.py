@@ -1,8 +1,38 @@
 """
+The MIT License (MIT)
+
+Copyright (c) 2023-present Hollo
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
+
+----------------
+
 ![logo](https://devhollo.github.io/!assets/dev_assets/hollosmodule/img/logo.png)
 see the Github page [here](https://github.com/DevHollo/Hollos-Module)
 """
-from typing import Literal, Union
+from typing import (
+    Literal,
+    Union,
+    TypeAlias,
+    NoReturn,
+    Self
+)
 
 def check_for_latest_hollosmodule_version():
     """
@@ -13,8 +43,8 @@ def check_for_latest_hollosmodule_version():
     import requests
     import logging
     try:
-        user_ver = str(pypi.version('hxml'))
-        pypi_ver = str(requests.get("https://pypi.org/pypi/HollosModule/json").json()['info']['version'])
+        user_ver = str(pypi.version('Hollos-Module'))
+        pypi_ver = str(requests.get("https://pypi.org/pypi/Hollos-Module/json").json()['info']['version'])
         if not user_ver == pypi_ver:
             subprocess.run(['pip', 'install', f'hxml=={pypi_ver}'])
         else:
@@ -605,7 +635,7 @@ class QRcode:
         except Exception as e:
             raise Exception(e)
 
-    def save_qr(self, p: str):
+    def save_qr(self, p: str, *args, **kwargs):
         """
         Save QR code.
         """
@@ -615,7 +645,7 @@ class QRcode:
         except Exception as e:
             raise Exception(e)
         
-    def delete_qr(self):
+    def delete_qr(self, *args, **kwargs):
         """
         Delete the QR code.
         """
@@ -624,3 +654,69 @@ class QRcode:
             os.remove(os.path.abspath(self.fp))
         else:
             raise FileNotFoundError("File not found")
+        
+    def visualize(self, *args, **kwargs):
+        self.__qrimg.show()
+
+class WinOS:
+    """
+    Commands for the Windows OS!
+    """
+    def __init__(self: Self, *args, **kwargs):
+        pass
+
+    @staticmethod
+    def exit(__status: TypeAlias | str | int | None = None, /) -> NoReturn:
+        """
+        Exit the console/app
+        """
+        import sys
+        sys.exit(__status)
+
+    @staticmethod
+    def pause(hide: bool = True, /) -> None:
+        """
+        This method pauses the script execution until the user presses a key. It optionally hides the `Press any key to continue...` message.
+        """
+        import os
+        if hide is True:
+            os.system("pause > nul")
+        elif hide is False:
+            os.system("pause")
+        else:
+            raise ValueError("Error with kw \'hide\'")
+        
+    @staticmethod
+    def timeout(t: int | float, /, *, nobreak: bool = True, hide: bool = False) -> None:
+        """
+        This method waits for a specified amount of time (in seconds). It can optionally hide the countdown timer and/or prevent users from breaking out of the wait by pressing a key.
+        """
+        import os
+        if nobreak is True:
+            if hide is True:
+                os.system(f"timeout /t {t} /nobreak > nul")
+            elif hide is False:
+                os.system(f"timeout /t {t} /nobreak")
+        elif nobreak is False:
+            if hide is True:
+                os.system(f"timeout /t {t} > nul")
+            elif hide is False:
+                os.system(f"timeout /t {t}")
+        else:
+            raise ValueError("Error with keywords in func \'WinOS().timeout()\'")
+        
+    @staticmethod
+    def cls() -> None:
+        """
+        Clear the console
+        """
+        import os
+        os.system("cls")
+    
+    @staticmethod
+    def cmd(command: str | None, /) -> None:
+        """
+        Run a command
+        """
+        import os
+        os.system(command)
